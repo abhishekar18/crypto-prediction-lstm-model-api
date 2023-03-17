@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Crypto Price Prediction</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <header>
         <div class="logo">
@@ -23,19 +25,21 @@
         <form id="my-form">
             <label for="coin-select">Select a coin:</label>
             <select id="coin-select">
-                <option value="BTC">Bitcoin (BTC)</option>
-                <option value="ETH">Ethereum (ETH)</option>
-                <option value="XRP">XRP (XRP)</option>
-                <!-- <option value="other">Other</option> -->
+                <option value="BTC">Bitcoin </option>
+                <option value="ETH">Ethereum </option>
+                <option value="XRP">XRP </option>
+                <option value="USDT">Tether </option>
+                <option value="BNB">Binance Coin </option>
+                <option value="ADA">Cardano </option>
+                <option value="SOL">Solana </option>
+                <option value="DOGE">Dogecoin </option>
             </select>
 
             <label for="currency-select">Select a currency:</label>
-             <select id="currency-select">
+            <select id="currency-select">
                 <option value="USD">U.S.Dollar (USD)</option>
-                <option value="EUR">European Euro(EUR)</option>
                 <option value="INR">Indian Rupee (INR)</option>
-                <!-- <option value="other">Other</option> -->
-            </select>           
+            </select>
             <button type="submit">Predict Price</button>
         </form>
 
@@ -43,18 +47,17 @@
             <h2>Predicted Graph:</h2>
             <img id="image" src="" alt="Model is Running in the Backend, Have a cup of Tea">
         </div>
-        
+
     </main>
 
     <footer>
         <p>&copy; 2023 Crypto Price Prediction</p>
     </footer>
     <script>
-    
+
         const form = document.getElementById('my-form');
         const coinSelect = document.getElementById('coin-select');
         const currencySelect = document.getElementById('currency-select');
-        //const graphDiv = document.getElementById('graph-div');
         const image = document.getElementById('image');
 
         form.addEventListener('submit', (event) => {
@@ -65,20 +68,20 @@
             const data = {
                 crypto: crypto,
                 currency: currency
-              };
-            
-fetch('http://127.0.0.1:5000/predict', {
-    method: "POST", // specify the HTTP method
-    headers: { "Content-Type": "application/json" }, // set the request headers
-    body: JSON.stringify(data) // set the request body
-  })
-        .then(response => response.blob())
-        .then(blob => {
-          const objectURL = URL.createObjectURL(blob);
-          image.src = objectURL;
-        })
-        .catch(error => console.error(error));
-    });
+            };
+
+            fetch('http://127.0.0.1:5000/predict', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.blob())
+                .then(blob => {
+                    const objectURL = URL.createObjectURL(blob);
+                    image.src = objectURL;
+                })
+                .catch(error => console.error(error));
+        });
     </script>
 </body>
 </html>
