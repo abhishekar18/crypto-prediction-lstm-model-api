@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CryptoLSTM</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="coin.png" type="image/x-icon">
+</head>
+
+<body>
+    <header>
+        <h1>CryptoLSTM</h1>
+
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="prediction.html">Prediction</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="survey.html">Suggestion</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Cryptocurrency Survey</h1>
+        <form id="my-form">
+            <label for="coin-select">Have you ever invested in cryptocurrency before?</label>
+            <br><br>
+            <select id="invest">
+                <option value="">select</option>
+                <option value="yes">Yes </option>
+                <option value="no">No </option>
+            </select>
+            <br><br>
+            <label for="term">Are you looking to invest in cryptocurrency for the short-term or the long-term?</label>
+            <br><br>
+            <select id="term">
+                <option value="">select</option>
+                <option value="long term">Long-term</option>
+                <option value="short term">Short-term</option>
+            </select>
+            <br><br>
+            <label for="risk">Are you comfortable with high-risk investments or would you prefer a more conservative
+                approach?</label>
+            <br><br>
+            <select id="risk">
+                <option value="">select</option>
+                <option value="high">High-Risk Investment</option>
+                <option value="conservative">Conservative Investment</option>
+                <option value="low">Low-Risk Investment</option>
+            </select>
+            <br><br>
+            <label for="budget">What is your investment budget?(Enter Value In US Dollars)</label>
+            <br><br>
+            <input type="number" id="budget" min="0">
+            <br><br>
+            <label for="goal">Are you looking for capital gains, passive income, or a combination of both?</label>
+            <br><br>
+            <select id="goal">
+                <option value="">select</option>
+                <option value="capital">Capital Gains</option>
+                <option value="passive">Passive Income</option>
+                <option value="both">Combination of both</option>
+            </select>
+            <br><br><br>
+            <button type="submit">Submit</button>
+        </form>
+
+        <!-- <div class="result">
+            <h2>Predicted Graph:</h2>
+            <img id="image" src="" alt="Model is Running in the Backend, Have a cup of Tea" width="1080" height="720">
+        </div> -->
+        <div id="response" style="background-color: #f2f2f2;
+        border: 1px solid #ddd; display: block;
+        padding: 20px;
+        margin: 20px;
+        font-size: 18px;
+        font-family: Arial, sans-serif;
+        line-height: 1.5;
+        border-radius: 5px;"></div>
+        <div style="background-color: #f2f2f2;
+        border: 1px solid #ddd; display: block;
+        padding: 20px;
+        margin: 20px;
+        font-size: 18px;
+        font-family: Arial, sans-serif;
+        line-height: 1.5;
+        border-radius: 5px;">
+            <h3>You can learn more about investing in Cryptocurrencies</h3>
+            <br>
+            <ul>
+                <li><a href="https://www.investopedia.com/terms/c/cryptocurrency.asp">Investopedia</a> is a great resource for learning about various financial topics, including cryptocurrency. This
+                    article covers the basics of what cryptocurrency is, how it works, and how to invest in it.</li>
+                <li><a href="https://www.coinbase.com/learn">Coinbase</a> is one of the most popular cryptocurrency exchanges, and they have a comprehensive "Learn" section
+                    on their website that covers a wide range of topics related to cryptocurrency, including how to buy and sell
+                    cryptocurrency, how to secure your cryptocurrency, and more.</li>
+                <li><a href="https://academy.binance.com/">Binance</a> is another popular cryptocurrency exchange, and they also have an educational section on their
+                    website called Binance Academy. This resource covers a range of topics, including blockchain technology,
+                    trading strategies, and more.</li>
+                <li><a href="https://www.udemy.com/course/cryptocurrency-trading-course-2018-make-profit-daily/">Udemy - Cryptocurrency Trading Course</a> Udemy is a popular online learning platform that offers a variety of courses, including courses on
+                    cryptocurrency trading. This course covers the basics of cryptocurrency trading and includes practical
+                    examples and strategies.</li>
+                <li><a href="https://www.youtube.com/watch?v=IbJ6_j-_HcU">YouTube - Cryptocurrency Investing</a></li>
+            </ul>
+            
+            <br>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Crypto Price Prediction</p>
+    </footer>
+    <script>
+
+        const form = document.getElementById('my-form');
+        const investTerm = document.getElementById('invest');
+        const termYears = document.getElementById('term');
+        const riskType = document.getElementById('risk');
+        const budgetMoney = document.getElementById('budget');
+        const goals = document.getElementById('goal');
+
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const invest = investTerm.value;
+            const term = termYears.value;
+            const risk = riskType.value;
+            const budget = budgetMoney.value;
+            const goal = goals.value;
+            const data = {
+                invest: invest,
+                term: term,
+                risk: risk,
+                goal: goal,
+                budget: budget
+            };
+
+            fetch('http://127.0.0.1:8082/survey', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.text())
+                .then(data => {
+                    const responseEl = document.getElementById('response');
+                    responseEl.textContent = data;
+                })
+                .catch(error => console.error(error));
+        });
+
+    </script>
+</body>
+
+</html>
+</body>
+
+</html>

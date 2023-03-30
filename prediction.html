@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CryptoLSTM</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel = "icon" href = "coin.png" type = "image/x-icon">
+</head>
+
+<body>
+    <header>
+        <h1>CryptoLSTM</h1>
+
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="prediction.html">Prediction</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="survey.html">Suggestion</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Crypto Price Prediction</h1>
+        <form id="my-form">
+            <br><br>
+            <label for="coin-select">Select a coin:</label>
+            <br><br>
+            <select id="coin-select">
+                <option value="BTC">Bitcoin </option>
+                <option value="ETH">Ethereum </option>
+                <option value="XRP">XRP </option>
+                <option value="USDT">Tether </option>
+                <option value="BNB">Binance Coin </option>
+                <option value="ADA">Cardano </option>
+                <option value="SOL">Solana </option>
+                <option value="DOGE">Dogecoin </option>
+            </select>
+            <br><br>
+            <label for="currency-select">Select a currency:</label>
+            <br><br>
+            <select id="currency-select">
+                <option value="USD">U.S.Dollar (USD)</option>
+                <option value="INR">Indian Rupee (INR)</option>
+            </select>
+            <br><br>
+            <button type="submit">Predict Price</button>
+        </form>
+
+        <div class="result">
+            <h2>Predicted Graph:</h2>
+            <img id="image" src="" alt="Model is Running in the Backend, Have a cup of Tea" width="1080" height="720">
+        </div>
+
+    </main>
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+    <footer>
+        <p>&copy; Cryptocurrency Prediction</p>
+    </footer>
+    <script>
+
+        const form = document.getElementById('my-form');
+        const coinSelect = document.getElementById('coin-select');
+        const currencySelect = document.getElementById('currency-select');
+        const image = document.getElementById('image');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const crypto = coinSelect.value;
+            const currency = currencySelect.value;
+            const data = {
+                crypto: crypto,
+                currency: currency
+            };
+
+            fetch('http://127.0.0.1:5000/predict', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.blob())
+                .then(blob => {
+                    const objectURL = URL.createObjectURL(blob);
+                    image.src = objectURL;
+                })
+                .catch(error => console.error(error));
+        });
+    </script>
+</body>
+</html>
+</body>
+</html>
